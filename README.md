@@ -1,10 +1,10 @@
 # LinkedIn Provider for OAuth 2.0 Client
-[![Latest Version](https://img.shields.io/github/release/thephpleague/oauth2-linkedin.svg?style=flat-square)](https://github.com/thephpleague/oauth2-linkedin/releases)
+[![Latest Version](https://img.shields.io/github/release/thephpafbora/oauth2-linkedin-openid.svg?style=flat-square)](https://github.com/thephpafbora/oauth2-linkedin-openid/releases)
 [![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](LICENSE.md)
-[![Build Status](https://img.shields.io/travis/thephpleague/oauth2-linkedin/master.svg?style=flat-square)](https://travis-ci.org/thephpleague/oauth2-linkedin)
-[![Coverage Status](https://img.shields.io/scrutinizer/coverage/g/thephpleague/oauth2-linkedin.svg?style=flat-square)](https://scrutinizer-ci.com/g/thephpleague/oauth2-linkedin/code-structure)
-[![Quality Score](https://img.shields.io/scrutinizer/g/thephpleague/oauth2-linkedin.svg?style=flat-square)](https://scrutinizer-ci.com/g/thephpleague/oauth2-linkedin)
-[![Total Downloads](https://img.shields.io/packagist/dt/league/oauth2-linkedin.svg?style=flat-square)](https://packagist.org/packages/league/oauth2-linkedin)
+[![Build Status](https://img.shields.io/travis/thephpafbora/oauth2-linkedin-openid/master.svg?style=flat-square)](https://travis-ci.org/thephpafbora/oauth2-linkedin-openid)
+[![Coverage Status](https://img.shields.io/scrutinizer/coverage/g/thephpafbora/oauth2-linkedin-openid.svg?style=flat-square)](https://scrutinizer-ci.com/g/thephpafbora/oauth2-linkedin-openid/code-structure)
+[![Quality Score](https://img.shields.io/scrutinizer/g/thephpafbora/oauth2-linkedin-openid.svg?style=flat-square)](https://scrutinizer-ci.com/g/thephpafbora/oauth2-linkedin-openid)
+[![Total Downloads](https://img.shields.io/packagist/dt/afbora/oauth2-linkedin-openid.svg?style=flat-square)](https://packagist.org/packages/afbora/oauth2-linkedin-openid)
 
 This package provides LinkedIn OAuth 2.0 support for the PHP League's [OAuth 2.0 Client](https://github.com/thephpleague/oauth2-client).
 
@@ -29,7 +29,7 @@ If you encounter the following, or something similar, this policy is being enfor
 To install, use composer:
 
 ```
-composer require league/oauth2-linkedin
+composer require afbora/oauth2-linkedin-openid
 ```
 
 ## Usage
@@ -178,17 +178,12 @@ $refreshTokenExpiration = $token->getRefreshTokenExpires();
 $ ./vendor/bin/phpunit
 ```
 
-## Contributing
-
-Please see [CONTRIBUTING](https://github.com/thephpleague/oauth2-linkedin/blob/master/CONTRIBUTING.md) for details.
-
-
 ## Credits
 
 - [Steven Maguire](https://github.com/stevenmaguire)
-- [All Contributors](https://github.com/thephpleague/oauth2-linkedin/contributors)
+- [All Contributors](https://github.com/thephpafbora/oauth2-linkedin-openid/contributors)
 
 
 ## License
 
-The MIT License (MIT). Please see [License File](https://github.com/thephpleague/oauth2-linkedin/blob/master/LICENSE) for more information.
+The MIT License (MIT). Please see [License File](https://github.com/thephpafbora/oauth2-linkedin-openid/blob/master/LICENSE) for more information.
