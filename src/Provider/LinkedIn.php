@@ -21,7 +21,7 @@ class LinkedIn extends AbstractProvider
      *
      * @var array
      */
-    public $defaultScopes = ['r_liteprofile', 'r_emailaddress'];
+    public $defaultScopes = ['openid', 'profile', 'email'];
 
     /**
      * Requested fields in scope, seeded with default values
@@ -30,8 +30,7 @@ class LinkedIn extends AbstractProvider
      * @see https://developer.linkedin.com/docs/fields/basic-profile
      */
     protected $fields = [
-        'id', 'firstName', 'lastName', 'localizedFirstName', 'localizedLastName',
-        'profilePicture(displayImage~:playableStreams)',
+        'sub', 'name', 'given_name', 'family_name', 'picture', 'locale', 'email', 'email_verified'
     ];
 
     /**
@@ -61,13 +60,20 @@ class LinkedIn extends AbstractProvider
      * The grant that was used to fetch the response can be used to provide
      * additional context.
      *
-     * @param  array $response
-     * @param  AbstractGrant $grant
+     * @param array $response
+     * @param AbstractGrant $grant
      * @return AccessTokenInterface
      */
     protected function createAccessToken(array $response, AbstractGrant $grant)
     {
         return new LinkedInAccessToken($response);
+    }
+
+    protected function getAuthorizationHeaders($token = null)
+    {
+        return [
+            'Authorization' => "Bearer {$token}",
+        ];
     }
 
     /**
@@ -103,23 +109,19 @@ class LinkedIn extends AbstractProvider
     /**
      * Get provider url to fetch user details
      *
-     * @param  AccessToken $token
+     * @param AccessToken $token
      *
      * @return string
      */
     public function getResourceOwnerDetailsUrl(AccessToken $token)
     {
-        $query = http_build_query([
-            'projection' => '(' . implode(',', $this->fields) . ')'
-        ]);
-
-        return 'https://api.linkedin.com/v2/me?' . urldecode($query);
+        return 'https://api.linkedin.com/v2/userinfo';
     }
 
     /**
      * Get provider url to fetch user details
      *
-     * @param  AccessToken $token
+     * @param AccessToken $token
      *
      * @return string
      */
@@ -149,8 +151,8 @@ class LinkedIn extends AbstractProvider
     /**
      * Check a provider response for errors.
      *
-     * @param  ResponseInterface $response
-     * @param  array $data Parsed response data
+     * @param ResponseInterface $response
+     * @param array $data Parsed response data
      * @return void
      * @throws IdentityProviderException
      * @see https://developer.linkedin.com/docs/guide/v2/error-handling
@@ -171,8 +173,8 @@ class LinkedIn extends AbstractProvider
     /**
      * Check a provider response for unauthorized errors.
      *
-     * @param  ResponseInterface $response
-     * @param  array $data Parsed response data
+     * @param ResponseInterface $response
+     * @param array $data Parsed response data
      * @return void
      * @throws LinkedInAccessDeniedException
      * @see https://developer.linkedin.com/docs/guide/v2/error-handling
@@ -223,7 +225,7 @@ class LinkedIn extends AbstractProvider
     /**
      * Attempts to fetch resource owner's email address via separate API request.
      *
-     * @param  AccessToken $token [description]
+     * @param AccessToken $token [description]
      * @return string|null
      * @throws IdentityProviderException
      */
@@ -239,7 +241,7 @@ class LinkedIn extends AbstractProvider
     /**
      * Updates the requested fields in scope.
      *
-     * @param  array   $fields
+     * @param array $fields
      *
      * @return LinkedIn
      */
@@ -253,7 +255,7 @@ class LinkedIn extends AbstractProvider
     /**
      * Attempts to extract the email address from a valid email api response.
      *
-     * @param  array  $response
+     * @param array $response
      * @return string|null
      */
     protected function extractEmailFromResponse($response = [])
@@ -264,8 +266,7 @@ class LinkedIn extends AbstractProvider
                     strtoupper($element['type']) === 'EMAIL'
                     && strtoupper($element['state']) === 'CONFIRMED'
                     && $element['primary'] === true
-                    && isset($element['handle~']['emailAddress'])
-                ;
+                    && isset($element['handle~']['emailAddress']);
             });
 
             return $confirmedEmails[0]['handle~']['emailAddress'];
